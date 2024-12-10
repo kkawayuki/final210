@@ -4,16 +4,17 @@
 #include <random>
 #include <time.h>
 #include <deque>
+#include <vector>
 using namespace std;
 
 // global scope arrays with names used in generation
 string cNames[] = {"Alex", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jamie", "Dakota", "Reese", "Avery", "Kevin", "Rowan", "Sawyer", "Blake", "Drew", "Emerson", "Skylar"};
 string dNames[] = {"Cappucino", "Iced Coffee", "Pumpkin Spice Latte", "Coffee", "Golden Brew", "Yum Coffee", "Tasty drink with caffine", "expensive drink"};
 string mNames[] = {"Blueberry Muffin", "Chocolate Chip Muffin", "Banana Nut Muffin", "Lemon Poppy Seed Muffin", "Cinnamon Streusel Muffin", "Apple Cinnamon Muffin", "Raspberry Almond Muffin", "Pumpkin Spice Muffin", "Double Chocolate Muffin", "Cranberry Orange Muffin"};
-string bNames[] = {"Ziptie","Charm","Birthstone","Custom","Cool Rock","Awesome Rock","Love Charm","Luck Charm","Money Charm","OOP Class Success Charm","Kitty Charm"};
+string bNames[] = {"Ziptie", "Charm", "Birthstone", "Custom", "Cool Rock", "Awesome Rock", "Love Charm", "Luck Charm", "Money Charm", "OOP Class Success Charm", "Kitty Charm"};
 string lgsNames[] = {"Booster Box", "Booster Pack", "Plush", "Board Game", "Dice", "Deckbox", "Storage Box", "Trading Card Single", "Multiple Cards"};
 
-//lgs = "local game store"
+// lgs = "local game store"
 
 struct customer // parent class
 {
@@ -76,20 +77,29 @@ struct cardgameCustomer : public customer
 };
 
 // prototypes
-void runDay(int, list<coffeeCustomer> &);
+void runDay(int, list<coffeeCustomer> &, deque<muffinCustomer> &, vector<braceletCustomer> &);
 
 // MAIN ******************************************
 int main()
 {
     srand(time(0)); // seed random
 
-    // coffeeShop
-    list<coffeeCustomer> coffeeQueue; // central DLL data structure
-    
-    // initialize
-    for (int i = 0; i < 3; i++)
-        coffeeQueue.push_back(coffeeCustomer()); // push back random customer to start
+    // define various data structs
+    list<coffeeCustomer> coffeeQueue;
+    deque<muffinCustomer> muffinDeque;
+    vector<braceletCustomer> braceletVec;
 
+    // initialize nodes for each
+    for (int i = 0; i < 3; i++)
+    {
+        coffeeQueue.push_back(coffeeCustomer()); // push back random customer to start
+        muffinDeque.push_back(muffinCustomer());
+        braceletVec.push_back(braceletCustomer());
+    }
+
+    // add something to print initial lines for each?
+
+    // //logic to print starting data for each
     // cout << "INITIAL LINE: \n";
     // for (auto it : coffeeQueue)
     // {
@@ -97,26 +107,19 @@ int main()
     //     cout << '\n';
     // }
     // cout << '\n';
-    
-    //muffins
-    deque<muffinCustomer> muffinDeque;
-    for(int i = 0; i < 3; i++)
-        muffinDeque.push_back(muffinCustomer());
-    
-    //bracelets
-    
 
     // start simulation
-    runDay(10, coffeeQueue);
+    runDay(10, coffeeQueue, muffinDeque, braceletVec);
 }
 
 // implementation
-void runDay(int days, list<coffeeCustomer> &listCustomers) // change to accomodate other data structs
+void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer> &dequeMuffins, vector<braceletCustomer> &vecBracelets) // change to accomodate other data structs
 {
     int join = 0; // control to push_front
 
     for (int i = 0; i < days; i++) // for each day you want to sim
     {
+        //rework logic to work for each data structure 
         bool somethingHappens = false;
 
         cout << "DAY " << i + 1 << '\n';
