@@ -115,38 +115,89 @@ int main()
 // implementation
 void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer> &dequeMuffins, vector<braceletCustomer> &vecBracelets) // change to accomodate other data structs
 {
-    int join = 0; // control to push_front
+    int join = 0; // control to add new customer for each datatype
 
     for (int i = 0; i < days; i++) // for each day you want to sim
     {
-        //rework logic to work for each data structure 
-        bool somethingHappens = false;
+        // rework logic to work for each data structure
+        bool cOccurrence, mOccurrence, bOccurrence, tOccurrence;
+        cOccurrence = mOccurrence = bOccurrence = tOccurrence = false;
 
         cout << "DAY " << i + 1 << '\n';
 
-        // guarantee to serve each iteration, so long as not empty line
-        if (!listCustomers.empty())
+        // COFFEE SECTION
         {
-            cout << listCustomers.front().customerName << " with order: " << listCustomers.front().Order << " was served.\n";
-            listCustomers.pop_front();
-            somethingHappens = true;
+            if (!listCustomers.empty())
+            {
+                cout << "COFFEE: " <<listCustomers.front().customerName << " with order: " << listCustomers.front().Order << " was served.\n";
+                listCustomers.pop_front();
+                cOccurrence = true;
+            }
+
+            join = rand() % 2;
+            if (join)
+            {
+                coffeeCustomer *temp = new coffeeCustomer();
+                cout << "COFFEE: " << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
+
+                listCustomers.push_back(*temp); // add customer to back
+                cOccurrence = true;
+            }
+
+            if (!cOccurrence)
+            {
+                cout << "Nothing happened at CoffeeStore today.\n";
+            }
         }
 
-        //
-        join = rand() % 2;
-        if (join)
+        // MUFFIN SECTION
         {
-            coffeeCustomer *temp = new coffeeCustomer();
-            cout << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
+            if (!dequeMuffins.empty())
+            {
+                cout << "MUFFIN: " <<dequeMuffins.front().customerName << " with order: " << dequeMuffins.front().Order << " was served.\n";
+                dequeMuffins.pop_front();
+                mOccurrence = true;
+            }
 
-            listCustomers.push_back(*temp); // add customer to back
-            somethingHappens = true;
+            join = rand() % 2;
+            if (join)
+            {
+                muffinCustomer *temp = new muffinCustomer();
+                cout << "MUFFIN: " << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
+
+                dequeMuffins.push_back(*temp); // add customer to back
+                mOccurrence = true;
+            }
+
+            if (!mOccurrence)
+            {
+                cout << "Nothing happened at MuffinStore today.\n";
+            }
         }
 
-        if (!somethingHappens)
+        //BRACELET SECTION
         {
-            cout << "Nothing happened, store empty.\n";
+            if (!vecBracelets.empty())
+            {
+                cout << "BRACELET: " << vecBracelets.front().customerName << " with order: " << vecBracelets.front().Order << " was served.\n";
+                vecBracelets.pop_front(); //need to fix, cannot pop_front by default with vector
+                bOccurrence = true;
+            }
+
+            join = rand() % 2;
+            if (join)
+            {
+                braceletCustomer *temp = new braceletCustomer();
+                cout << "BRACELET: " << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
+
+                vecBracelets.push_back(*temp); // add customer to back
+                mOccurrence = true;
+            }
+
+            if (!mOccurrence)
+            {
+                cout << "Nothing happened at BraceletStore today.\n";
+            }
         }
-        cout << '\n';
     }
 }
