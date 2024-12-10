@@ -76,82 +76,81 @@ struct cardgameCustomer : public customer
 };
 
 // implement coffeeBooth using DLL defined in midterm part 2: 
-//Copied code below: 
-class DoublyLinkedList
-{
-private:
-    struct Customer
-    {
-        // fields of customer
-        string customerName;
-        string Order;
-        Customer *prev;
-        Customer *next;
+// Copied code below: 
+// class DoublyLinkedList
+// {
+// private:
+//     struct Customer
+//     {
+//         // fields of customer
+//         string customerName;
+//         string Order;
+//         Customer *prev;
+//         Customer *next;
 
-        // constructor
-        Customer(Customer *p = nullptr, Customer *n = nullptr)
-        {
-            customerName = cNames[rand() % (cNames->size() - 1)]; // take in string name as parameter
-            Order = dNames[rand() % (dNames->size() - 1)];
-            prev = p;
-            next = n;
-        }
-    };
-    Customer *head;
-    Customer *tail;
+//         // constructor
+//         Customer(Customer *p = nullptr, Customer *n = nullptr)
+//         {
+//             customerName = cNames[rand() % (cNames->size() - 1)]; // take in string name as parameter
+//             Order = dNames[rand() % (dNames->size() - 1)];
+//             prev = p;
+//             next = n;
+//         }
+//     };
+//     Customer *head;
+//     Customer *tail;
 
-public:
-    DoublyLinkedList()
-    {
-        head = nullptr;
-        tail = nullptr;
-    }
+// public:
+//     DoublyLinkedList()
+//     {
+//         head = nullptr;
+//         tail = nullptr;
+//     }
 
-    void push_back()
-    {
-        Customer *newCustomer = new Customer(); // make new customer
-        if (!tail)
-            head = tail = newCustomer;
-        else
-        {
-            tail->next = newCustomer;
-            newCustomer->prev = tail;
-            tail = newCustomer;
-        }
-    }
+//     void push_back()
+//     {
+//         Customer *newCustomer = new Customer(); // make new customer
+//         if (!tail)
+//             head = tail = newCustomer;
+//         else
+//         {
+//             tail->next = newCustomer;
+//             newCustomer->prev = tail;
+//             tail = newCustomer;
+//         }
+//     }
 
-    void pop_front()
-    {
-        if (!head)
-        {
-            cout << "List is empty." << endl;
-            return;
-        }
+//     void pop_front()
+//     {
+//         if (!head)
+//         {
+//             cout << "List is empty." << endl;
+//             return;
+//         }
 
-        Customer *temp = head;
+//         Customer *temp = head;
 
-        if (head->next)
-        {
-            head = head->next;
-            head->prev = nullptr;
-        }
-        else
-            head = tail = nullptr;
+//         if (head->next)
+//         {
+//             head = head->next;
+//             head->prev = nullptr;
+//         }
+//         else
+//             head = tail = nullptr;
 
-        delete temp; 
-    }
+//         delete temp; 
+//     }
 
-
-    ~DoublyLinkedList()
-    {
-        while (head)
-        {
-            Customer *temp = head;
-            head = head->next;
-            delete temp;
-        }
-    }
-};
+//     ~DoublyLinkedList()
+//     {
+//         while (head)
+//         {
+//             Customer *temp = head;
+//             head = head->next;
+//             delete temp;
+//         }
+//     }
+// };
 //end copied code
 
 // prototypes
@@ -270,9 +269,8 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
             }
         }
 
-        // LOCAL GAME STORE SECTION
+        // LOCAL GAME STORE SECTION (Implemented via stack)
         {
-            // this is going to need modification to work similarly to other data structures
             if (!stackLGS.empty())
             {
                 cout << "GAME STORE: " << stackLGS.top().customerName << " with order: " << stackLGS.top().Order << " was served.\n";
@@ -286,7 +284,7 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
                 cardgameCustomer *temp = new cardgameCustomer();
                 cout << "GAME STORE: " << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
 
-                stackLGS.push(*temp); // add customer to top of stack (bypassing rest of line)
+                stackLGS.push(*temp); // add customer to top of stack bypassing rest of line, (bad business practice.)
                 cOccurrence = true;
             }
 
