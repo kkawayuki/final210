@@ -82,7 +82,7 @@ void runDay(int, list<coffeeCustomer> &, deque<muffinCustomer> &, vector<bracele
 // MAIN ******************************************
 int main()
 {
-    srand(time(0)); // seed random
+    srand(time(0)); // seed random, NOTE: NAMES HIGHLY REPETITIVE DUE TO SPEED OF CONSTRUCTION
 
     // define various data structs
     list<coffeeCustomer> coffeeQueue;
@@ -180,7 +180,7 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
             if (!vecBracelets.empty())
             {
                 cout << "BRACELET: " << vecBracelets.front().customerName << " with order: " << vecBracelets.front().Order << " was served.\n";
-                vecBracelets.pop_front(); //need to fix, cannot pop_front by default with vector
+                vecBracelets.erase(vecBracelets.begin()); //removes first element utilizing reference to beginning
                 bOccurrence = true;
             }
 
@@ -199,5 +199,10 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
                 cout << "Nothing happened at BraceletStore today.\n";
             }
         }
+
+        // LOCAL GAME STORE SECTION
+
+        //to seperate days
+        cout << '\n';
     }
 }
