@@ -75,15 +75,10 @@ struct cardgameCustomer : public customer
     }
 };
 
-
-//self-implemented linked list
-class myLL
+//coffeebooth implemented using manual linked list
+struct llCoffeeCustomer : public coffeeCustomer
 {
-private:
-
-public:
-
-
+    llCoffeeCustomer *next; //stores pointer to next value in linked list
 };
 
 
@@ -109,17 +104,6 @@ int main()
         braceletVec.push_back(braceletCustomer());
         lgsStack.push(cardgameCustomer());
     }
-
-    // add something to print initial lines for each?
-
-    // //logic to print starting data for each
-    // cout << "INITIAL LINE: \n";
-    // for (auto it : coffeeQueue)
-    // {
-    //     it.printInfo(); // print initial data
-    //     cout << '\n';
-    // }
-    // cout << '\n';
 
     // start simulation
     cout << "SIMULATION BEGINS!\n\n";
