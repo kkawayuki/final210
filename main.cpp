@@ -17,20 +17,46 @@ struct customer
     //default constructor for random value initialization
     customer()
     {
-        customerName = cNames[rand()%cNames->size()];
-        drinkOrder = dNames[rand()%dNames->size()];
+        customerName = cNames[rand()%(cNames->size()-1)]; //random customername/drinkorder name, -1 to avoid out of bounds behavior
+        drinkOrder = dNames[rand()%(dNames->size()-1)];
+    }
+
+    //function to simplify output process
+    void printInfo()
+    {
+        cout << customerName << ": " << drinkOrder; 
     }
 
 };
 
+//prototypes
+void runDay(int, list<customer>&);
 
+//MAIN ******************************************
 int main()
 {
     srand(time(0)); //seed random
 
     list<customer> coffeeQueue; // central DLL data structure
 
-    //test
-    coffeeQueue.push_back(customer()); //push back default customer
-    cout << coffeeQueue.front().customerName << " " << coffeeQueue.front().drinkOrder; 
+    //initialize
+    for(int i = 0; i < 3; i++)
+        coffeeQueue.push_back(customer()); //push back random customer to start
+
+    runDay(10, coffeeQueue);
+}
+
+//implementation
+void runDay(int days, list<customer>&listCustomers)
+{
+    int join = 0; //control to push_front
+
+    for(int i = 0; i < days; i++) //for each day you want to sim
+    {
+        //test
+        join = rand()%2;
+        cout << join << '\n';
+
+
+    }
 }
