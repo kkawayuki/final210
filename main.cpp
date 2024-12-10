@@ -1,5 +1,5 @@
 #include <iostream>
-#include <list> //DLL
+#include <list> //DLL, cannot use, implement my own
 #include <array>
 #include <random>
 #include <time.h>
@@ -13,9 +13,7 @@ string cNames[] = {"Alex", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jami
 string dNames[] = {"Cappucino", "Iced Coffee", "Pumpkin Spice Latte", "Coffee", "Golden Brew", "Yum Coffee", "Tasty drink with caffine", "expensive drink"};
 string mNames[] = {"Blueberry Muffin", "Chocolate Chip Muffin", "Banana Nut Muffin", "Lemon Poppy Seed Muffin", "Cinnamon Streusel Muffin", "Apple Cinnamon Muffin", "Raspberry Almond Muffin", "Pumpkin Spice Muffin", "Double Chocolate Muffin", "Cranberry Orange Muffin"};
 string bNames[] = {"Ziptie", "Charm", "Birthstone", "Custom", "Cool Rock", "Awesome Rock", "Love Charm", "Luck Charm", "Money Charm", "OOP Class Success Charm", "Kitty Charm"};
-string lgsNames[] = {"Booster Box", "Booster Pack", "Plush", "Board Game", "Dice", "Deckbox", "Storage Box", "Trading Card Single", "Multiple Cards"};
-
-// lgs = "local game store"
+string lgsNames[] = {"Booster Box", "Booster Pack", "Plush", "Board Game", "Dice", "Deckbox", "Storage Box", "Trading Card Single", "Multiple Cards"}; // lgs = "local game store"
 
 struct customer // parent class
 {
@@ -77,6 +75,18 @@ struct cardgameCustomer : public customer
     }
 };
 
+
+//self-implemented linked list
+class myLL
+{
+private:
+
+public:
+
+
+};
+
+
 // prototypes
 void runDay(int, list<coffeeCustomer> &, deque<muffinCustomer> &, vector<braceletCustomer> &, stack<cardgameCustomer> &);
 
@@ -86,7 +96,7 @@ int main()
     srand(time(0)); // seed random, NOTE: NAMES HIGHLY REPETITIVE DUE TO SPEED OF CONSTRUCTION
 
     // define various data structs
-    list<coffeeCustomer> coffeeQueue;
+    list<coffeeCustomer> coffeeQueue; //this one should use a custom linked list
     deque<muffinCustomer> muffinDeque;
     vector<braceletCustomer> braceletVec;
     stack<cardgameCustomer> lgsStack; // mine uses a stack, which I'll have to manipulate to make similar?
