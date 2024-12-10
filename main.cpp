@@ -75,12 +75,84 @@ struct cardgameCustomer : public customer
     }
 };
 
-//coffeebooth implemented using manual linked list
-struct llCoffeeCustomer : public coffeeCustomer
+// implement coffeeBooth using DLL defined in midterm part 2: 
+//Copied code below: 
+class DoublyLinkedList
 {
-    llCoffeeCustomer *next; //stores pointer to next value in linked list
-};
+private:
+    struct Customer
+    {
+        // fields of customer
+        string customerName;
+        string Order;
+        Customer *prev;
+        Customer *next;
 
+        // constructor
+        Customer(Customer *p = nullptr, Customer *n = nullptr)
+        {
+            customerName = cNames[rand() % (cNames->size() - 1)]; // take in string name as parameter
+            Order = dNames[rand() % (dNames->size() - 1)];
+            prev = p;
+            next = n;
+        }
+    };
+    Customer *head;
+    Customer *tail;
+
+public:
+    DoublyLinkedList()
+    {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void push_back()
+    {
+        Customer *newCustomer = new Customer(); // make new customer
+        if (!tail)
+            head = tail = newCustomer;
+        else
+        {
+            tail->next = newCustomer;
+            newCustomer->prev = tail;
+            tail = newCustomer;
+        }
+    }
+
+    void pop_front()
+    {
+        if (!head)
+        {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        Customer *temp = head;
+
+        if (head->next)
+        {
+            head = head->next;
+            head->prev = nullptr;
+        }
+        else
+            head = tail = nullptr;
+
+        delete temp; 
+    }
+
+
+    ~DoublyLinkedList()
+    {
+        while (head)
+        {
+            Customer *temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+//end copied code
 
 // prototypes
 void runDay(int, list<coffeeCustomer> &, deque<muffinCustomer> &, vector<braceletCustomer> &, stack<cardgameCustomer> &);
@@ -91,7 +163,7 @@ int main()
     srand(time(0)); // seed random, NOTE: NAMES HIGHLY REPETITIVE DUE TO SPEED OF CONSTRUCTION
 
     // define various data structs
-    list<coffeeCustomer> coffeeQueue; //this one should use a custom linked list
+    list<coffeeCustomer> coffeeQueue; // this one should use a custom linked list
     deque<muffinCustomer> muffinDeque;
     vector<braceletCustomer> braceletVec;
     stack<cardgameCustomer> lgsStack; // mine uses a stack, which I'll have to manipulate to make similar?
@@ -124,7 +196,7 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
         cout << "DAY " << i + 1 << '\n';
 
         // COFFEE SECTION
-        { //NOTE: indentation so I can collapse sections while editing code if needed
+        { // NOTE: indentation so I can collapse sections while editing code if needed
             if (!listCustomers.empty())
             {
                 cout << "COFFEE: " << listCustomers.front().customerName << " with order: " << listCustomers.front().Order << " was served.\n";
@@ -200,11 +272,11 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
 
         // LOCAL GAME STORE SECTION
         {
-            //this is going to need modification to work similarly to other data structures
+            // this is going to need modification to work similarly to other data structures
             if (!stackLGS.empty())
             {
                 cout << "GAME STORE: " << stackLGS.top().customerName << " with order: " << stackLGS.top().Order << " was served.\n";
-                stackLGS.pop(); //can only add to/remove from top
+                stackLGS.pop(); // can only add to/remove from top
                 cOccurrence = true;
             }
 
