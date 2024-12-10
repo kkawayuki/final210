@@ -11,6 +11,9 @@ string cNames[] = {"Alex", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jami
 string dNames[] = {"Cappucino", "Iced Coffee", "Pumpkin Spice Latte", "Coffee", "Golden Brew", "Yum Coffee", "Tasty drink with caffine", "expensive drink"};
 string mNames[] = {"Blueberry Muffin", "Chocolate Chip Muffin", "Banana Nut Muffin", "Lemon Poppy Seed Muffin", "Cinnamon Streusel Muffin", "Apple Cinnamon Muffin", "Raspberry Almond Muffin", "Pumpkin Spice Muffin", "Double Chocolate Muffin", "Cranberry Orange Muffin"};
 string bNames[] = {"Ziptie","Charm","Birthstone","Custom","Cool Rock","Awesome Rock","Love Charm","Luck Charm","Money Charm","OOP Class Success Charm","Kitty Charm"};
+string lgsNames[] = {"Booster Box", "Booster Pack", "Plush", "Board Game", "Dice", "Deckbox", "Storage Box", "Trading Card Single", "Multiple Cards"};
+
+//lgs = "local game store"
 
 struct customer // parent class
 {
@@ -61,14 +64,14 @@ struct braceletCustomer : public customer
     }
 };
 
-struct braceletCustomer : public customer
+struct cardgameCustomer : public customer
 {
     // inherit functionality from customer class
 
-    braceletCustomer()
+    cardgameCustomer()
         : customer()
     {
-        Order = bNames[rand() % (bNames->size() - 1)];
+        Order = lgsNames[rand() % (lgsNames->size() - 1)];
     }
 };
 
@@ -82,21 +85,26 @@ int main()
 
     // coffeeShop
     list<coffeeCustomer> coffeeQueue; // central DLL data structure
-    {                                 // indent for readability/collapsability in IDE
-        // initialize
-        for (int i = 0; i < 3; i++)
-            coffeeQueue.push_back(coffeeCustomer()); // push back random customer to start
+    
+    // initialize
+    for (int i = 0; i < 3; i++)
+        coffeeQueue.push_back(coffeeCustomer()); // push back random customer to start
 
-        cout << "INITIAL LINE: \n";
-        for (auto it : coffeeQueue)
-        {
-            it.printInfo(); // print initial data
-            cout << '\n';
-        }
-        cout << '\n';
-    }
-
+    // cout << "INITIAL LINE: \n";
+    // for (auto it : coffeeQueue)
+    // {
+    //     it.printInfo(); // print initial data
+    //     cout << '\n';
+    // }
+    // cout << '\n';
+    
+    //muffins
     deque<muffinCustomer> muffinDeque;
+    for(int i = 0; i < 3; i++)
+        muffinDeque.push_back(muffinCustomer());
+    
+    //bracelets
+    
 
     // start simulation
     runDay(10, coffeeQueue);
