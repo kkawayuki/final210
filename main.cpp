@@ -5,6 +5,7 @@
 #include <time.h>
 #include <deque>
 #include <vector>
+#include <stack> //for my data structure
 using namespace std;
 
 // global scope arrays with names used in generation
@@ -77,7 +78,7 @@ struct cardgameCustomer : public customer
 };
 
 // prototypes
-void runDay(int, list<coffeeCustomer> &, deque<muffinCustomer> &, vector<braceletCustomer> &);
+void runDay(int, list<coffeeCustomer> &, deque<muffinCustomer> &, vector<braceletCustomer> &, stack<cardgameCustomer> &);
 
 // MAIN ******************************************
 int main()
@@ -88,6 +89,7 @@ int main()
     list<coffeeCustomer> coffeeQueue;
     deque<muffinCustomer> muffinDeque;
     vector<braceletCustomer> braceletVec;
+    stack<cardgameCustomer> lgsStack; // mine uses a stack, which I'll have to manipulate to make similar?
 
     // initialize nodes for each
     for (int i = 0; i < 3; i++)
@@ -95,6 +97,7 @@ int main()
         coffeeQueue.push_back(coffeeCustomer()); // push back random customer to start
         muffinDeque.push_back(muffinCustomer());
         braceletVec.push_back(braceletCustomer());
+        lgsStack.push(cardgameCustomer());
     }
 
     // add something to print initial lines for each?
@@ -109,11 +112,12 @@ int main()
     // cout << '\n';
 
     // start simulation
-    runDay(10, coffeeQueue, muffinDeque, braceletVec);
+    cout << "SIMULATION BEGINS!\n\n";
+    runDay(10, coffeeQueue, muffinDeque, braceletVec, lgsStack);
 }
 
 // implementation
-void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer> &dequeMuffins, vector<braceletCustomer> &vecBracelets) // change to accomodate other data structs
+void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer> &dequeMuffins, vector<braceletCustomer> &vecBracelets, stack<cardgameCustomer> &stackLGS) // change to accomodate other data structs
 {
     int join = 0; // control to add new customer for each datatype
 
@@ -126,10 +130,10 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
         cout << "DAY " << i + 1 << '\n';
 
         // COFFEE SECTION
-        {
+        { //NOTE: indentation so I can collapse sections while editing code if needed
             if (!listCustomers.empty())
             {
-                cout << "COFFEE: " <<listCustomers.front().customerName << " with order: " << listCustomers.front().Order << " was served.\n";
+                cout << "COFFEE: " << listCustomers.front().customerName << " with order: " << listCustomers.front().Order << " was served.\n";
                 listCustomers.pop_front();
                 cOccurrence = true;
             }
@@ -154,7 +158,7 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
         {
             if (!dequeMuffins.empty())
             {
-                cout << "MUFFIN: " <<dequeMuffins.front().customerName << " with order: " << dequeMuffins.front().Order << " was served.\n";
+                cout << "MUFFIN: " << dequeMuffins.front().customerName << " with order: " << dequeMuffins.front().Order << " was served.\n";
                 dequeMuffins.pop_front();
                 mOccurrence = true;
             }
@@ -175,12 +179,12 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
             }
         }
 
-        //BRACELET SECTION
+        // BRACELET SECTION
         {
             if (!vecBracelets.empty())
             {
                 cout << "BRACELET: " << vecBracelets.front().customerName << " with order: " << vecBracelets.front().Order << " was served.\n";
-                vecBracelets.erase(vecBracelets.begin()); //removes first element utilizing reference to beginning
+                vecBracelets.erase(vecBracelets.begin()); // removes first element utilizing reference to beginning
                 bOccurrence = true;
             }
 
@@ -201,8 +205,32 @@ void runDay(int days, list<coffeeCustomer> &listCustomers, deque<muffinCustomer>
         }
 
         // LOCAL GAME STORE SECTION
+        {
+            //this is going to need modification to work similarly to other data structures
+            if (!stackLGS.empty())
+            {
+                cout << "GAME STORE: " << stackLGS.top().customerName << " with order: " << stackLGS.top().Order << " was served.\n";
+                stackLGS.pop(); //can only add to/remove from top
+                cOccurrence = true;
+            }
 
-        //to seperate days
+            join = rand() % 2;
+            if (join)
+            {
+                cardgameCustomer *temp = new cardgameCustomer();
+                cout << "GAME STORE: " << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
+
+                stackLGS.push(*temp); // add customer to top of stack (bypassing rest of line)
+                cOccurrence = true;
+            }
+
+            if (!cOccurrence)
+            {
+                cout << "Nothing happened at GameStore today.\n";
+            }
+        }
+
+        // to seperate days
         cout << '\n';
     }
 }
