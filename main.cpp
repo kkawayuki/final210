@@ -6,9 +6,11 @@
 #include <deque>
 using namespace std;
 
-// global scope arrays with names for customers/drinks, used in generation
-string dNames[] = {"Cappucino", "Iced Coffee", "Pumpkin Spice Latte", "Coffee", "Golden Brew", "Yum Coffee", "Tasty drink with caffine", "expensive drink"};
+// global scope arrays with names used in generation
 string cNames[] = {"Alex", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jamie", "Dakota", "Reese", "Avery", "Kevin", "Rowan", "Sawyer", "Blake", "Drew", "Emerson", "Skylar"};
+string dNames[] = {"Cappucino", "Iced Coffee", "Pumpkin Spice Latte", "Coffee", "Golden Brew", "Yum Coffee", "Tasty drink with caffine", "expensive drink"};
+string mNames[] = {"Blueberry Muffin", "Chocolate Chip Muffin", "Banana Nut Muffin", "Lemon Poppy Seed Muffin", "Cinnamon Streusel Muffin", "Apple Cinnamon Muffin", "Raspberry Almond Muffin", "Pumpkin Spice Muffin", "Double Chocolate Muffin", "Cranberry Orange Muffin"};
+string bNames[] = {"Ziptie","Charm","Birthstone","Custom","Cool Rock","Awesome Rock","Love Charm","Luck Charm","Money Charm","OOP Class Success Charm","Kitty Charm"};
 
 struct customer // parent class
 {
@@ -31,10 +33,10 @@ struct customer // parent class
 struct coffeeCustomer : public customer // use inheritance learned in CS200 to avoid redundancies where possible
 {
     coffeeCustomer()
-    :customer()
+        : customer()
     {
-        Order = dNames[rand() % (cNames->size() - 1)]
-    }  
+        Order = dNames[rand() % (dNames->size() - 1)];
+    }
 };
 
 struct muffinCustomer : public customer
@@ -42,12 +44,36 @@ struct muffinCustomer : public customer
     // inherit functionality from customer class
 
     muffinCustomer()
+        : customer()
     {
+        Order = mNames[rand() % (mNames->size() - 1)];
+    }
+};
+
+struct braceletCustomer : public customer
+{
+    // inherit functionality from customer class
+
+    braceletCustomer()
+        : customer()
+    {
+        Order = bNames[rand() % (bNames->size() - 1)];
+    }
+};
+
+struct braceletCustomer : public customer
+{
+    // inherit functionality from customer class
+
+    braceletCustomer()
+        : customer()
+    {
+        Order = bNames[rand() % (bNames->size() - 1)];
     }
 };
 
 // prototypes
-void runDay(int, list<customer> &);
+void runDay(int, list<coffeeCustomer> &);
 
 // MAIN ******************************************
 int main()
@@ -55,11 +81,11 @@ int main()
     srand(time(0)); // seed random
 
     // coffeeShop
-    list<customer> coffeeQueue; // central DLL data structure
-    {                           // indent for readability/collapsability in IDE
+    list<coffeeCustomer> coffeeQueue; // central DLL data structure
+    {                                 // indent for readability/collapsability in IDE
         // initialize
         for (int i = 0; i < 3; i++)
-            coffeeQueue.push_back(customer()); // push back random customer to start
+            coffeeQueue.push_back(coffeeCustomer()); // push back random customer to start
 
         cout << "INITIAL LINE: \n";
         for (auto it : coffeeQueue)
@@ -70,14 +96,14 @@ int main()
         cout << '\n';
     }
 
-    deque<>
+    deque<muffinCustomer> muffinDeque;
 
-        // start simulation
-        runDay(10, coffeeQueue);
+    // start simulation
+    runDay(10, coffeeQueue);
 }
 
 // implementation
-void runDay(int days, list<customer> &listCustomers) // change to accomodate other data structs
+void runDay(int days, list<coffeeCustomer> &listCustomers) // change to accomodate other data structs
 {
     int join = 0; // control to push_front
 
@@ -90,7 +116,7 @@ void runDay(int days, list<customer> &listCustomers) // change to accomodate oth
         // guarantee to serve each iteration, so long as not empty line
         if (!listCustomers.empty())
         {
-            cout << listCustomers.front().customerName << " with order: " << listCustomers.front().drinkOrder << " was served.\n";
+            cout << listCustomers.front().customerName << " with order: " << listCustomers.front().Order << " was served.\n";
             listCustomers.pop_front();
             somethingHappens = true;
         }
@@ -99,8 +125,8 @@ void runDay(int days, list<customer> &listCustomers) // change to accomodate oth
         join = rand() % 2;
         if (join)
         {
-            customer *temp = new customer();
-            cout << temp->customerName << " with order: " << temp->drinkOrder << " joined the line!\n";
+            coffeeCustomer *temp = new coffeeCustomer();
+            cout << temp->customerName << " with order: " << temp->Order << " joined the line!\n";
 
             listCustomers.push_back(*temp); // add customer to back
             somethingHappens = true;
